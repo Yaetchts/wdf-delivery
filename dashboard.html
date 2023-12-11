@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<!-- saved from url=(0129)file:///C:/Users/agent%20rice/Videos/Captures/samuel/data%20collection%20center/projects/websites/delivery%20walk/dashboard.html? -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Walk Delivery - Dashboard</title>
+    <style>
+      body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      header {
+        background-color: #333;
+        color: white;
+        text-align: center;
+        padding: 1em;
+      }
+
+      section {
+        margin: 20px;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        max-width: 300px;
+      }
+
+      button {
+        margin-top: 10px;
+        padding: 10px;
+        background-color: white;
+        color: black;
+        border: none;
+        cursor: pointer;
+      }
+
+      #dashboard {
+        display: none;
+      }
+
+      #offer-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+
+      #offer-table th, #offer-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+
+      #offer-table th {
+        background-color: #333;
+        color: white;
+      }
+
+      .green-button {
+        background-color: green;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+
+      .red-button {
+        background-color: red;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+    </style>
+</head>
+<body>
+
+
+  <!-- Header Section -->
+  <header>
+    <h1>Welcome to Wdf Delivery</h1>
+    <button onclick="logout()">Logout</button>
+  </header>
+  
+  <!-- Dashboard Section -->
+  <section id="dashboard" style="display: none;">
+    <h2>Your Delivery Offers</h2>
+    <table id="offer-table">
+      <thead>
+        <tr>
+          <th>Pickup Address</th>
+          <th>Drop-off Address</th>
+          <th>Package Name</th>
+          <th>Estimated Package Value</th>
+          <th>Weight</th>
+          <th>Cut</th>
+          <th>Your Answer</th>
+        </tr>
+      </thead>
+      <tbody id="offer-table-body"></tbody>
+    </table>
+  </section>
+  
+
+  
+
+  <!-- Delivery Form Section -->
+  <section id="delivery-form">
+    <h2>I am walking, driving, flying to? ...... today :</h2>
+    <form onsubmit="searchDeliveryOffers(event)">
+      <label for="productName">Enter Area where u heading today</label>
+      <input type="text" id="productName" required="">
+      <button type="submit" style="background-color:grey;">Search Offers</button>
+    </form>
+  </section>
+
+  <img src="R.gif" alt="" >
+  
+  <img src="flag.png" alt=""  style="position:absolute;top:0px;left:0px;" >
+  <img src="letter.png" alt="" height="120" width="120" style="position:absolute;top:20px;left:1000px;" >
+
+  <script>
+    const sampleOffers = [
+      { id: 1, pickupAddress: 'Address 1', dropOffAddress: 'Belville', packageName: 'Package 1', estimatedValue: 'R20', weight: '2kg' },
+      { id: 2, pickupAddress: 'Address 3', dropOffAddress: 'Address 4', packageName: 'Package 2', estimatedValue: 'R30', weight: '3kg' },
+    ];
+
+    function displayOffers(offers) {
+      const offerTableBody = document.getElementById('offer-table-body');
+      offerTableBody.innerHTML = '';
+
+      offers.forEach((offer) => {
+        const row = offerTableBody.insertRow();
+        row.insertCell(0).textContent = offer.pickupAddress;
+        row.insertCell(1).textContent = offer.dropOffAddress;
+        row.insertCell(2).textContent = offer.packageName;
+        row.insertCell(3).textContent = offer.estimatedValue;
+        row.insertCell(4).textContent = offer.weight;
+        row.insertCell(5).textContent = 'R12';  // Placeholder for 'Cut' column
+        const answerCell = row.insertCell(6);
+        const availableButton = document.createElement('button');
+        availableButton.textContent = 'Im available';
+        availableButton.classList.add('green-button');
+        availableButton.addEventListener('click', () => openGoogleMaps(offer.dropOffAddress));
+        const notAvailableButton = document.createElement('button');
+        notAvailableButton.textContent = 'Im not available';
+        notAvailableButton.classList.add('red-button');
+        notAvailableButton.addEventListener('click', () => showConfirmationPopup(offer.id));
+        answerCell.appendChild(availableButton);
+        answerCell.appendChild(notAvailableButton);
+      });
+
+      // Show the table when there are offers
+      document.getElementById('dashboard').style.display = offers.length > 0 ? 'block' : 'none';
+    }
+
+    function searchDeliveryOffers(event) {
+      event.preventDefault();
+      const searchInput = document.getElementById('productName').value.toLowerCase();
+
+      if (searchInput === 'belville') {
+        const filteredOffers = sampleOffers.filter(offer => offer.dropOffAddress.toLowerCase().includes(searchInput));
+        displayOffers(filteredOffers);
+      } else {
+        // Hide the table if the search keyword is not "belville"
+        document.getElementById('dashboard').style.display = 'none';
+      }
+    }
+
+    function openGoogleMaps(address) {
+      // Open Google Maps with the provided address
+      window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`);
+    }
+
+    function showConfirmationPopup(offerId) {
+      // Show a confirmation popup
+      const confirmation = confirm('Are you sure you are not interested?');
+      if (confirmation) {
+        // Display a message or send a request to delete the offer with offerId
+        console.log(`Offer ${offerId} will be deleted.`);
+      } else {
+        alert('Great, you helped your country today!');
+      }
+    }
+
+    // Function to handle logout (not implemented in this basic example)
+    function logout() {
+      alert('Logout functionality goes here');
+    }
+
+    // Display offers when the page loads
+    window.onload = () => displayOffers([]);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+<header>
+  <h1> Delivery Something</h1>
+  
+</header>
+
+
+<button onclick="toggleDeliveryForm()" style="position:absolute;top:500px;left:1000px;">Deliver a Product</button>
+
+<section id="delivery-form-section" style="display: none;position:absolute;top:140px;left:1050px;color:white;background-color: blue;" >
+  <h2>Deliver a Product</h2>
+  <form onsubmit="deliverProduct(event)">
+    <label for="productName">Product Name:</label>
+    <input type="text" id="productName" required="">
+
+    <label for="productWeight">Product Weight:</label>
+    <input type="text" id="productWeight" required="">
+
+    <label for="pickupLocation">Pickup Location:</label>
+    <input type="text" id="pickupLocation" required="">
+
+    <label for="initialPurchase">Initial Purchase:</label>
+    <input type="text" id="initialPurchase" required="">
+
+    <label for="packageDestination">Package Destination:</label>
+    <input type="text" id="packageDestination" required="">
+
+    <button type="submit">Submit</button>
+  </form>
+</section>
+
+<script>
+   function createButton(text, className, onClick) {
+      const button = document.createElement('button');
+      button.textContent = text;
+      button.classList.add(className);
+      button.addEventListener('click', onClick);
+      return button;
+    }
+
+    function deliverProduct(event) {
+      event.preventDefault();
+      const productName = document.getElementById('productName').value;
+      const productWeight = document.getElementById('productWeight').value;
+      const pickupLocation = document.getElementById('pickupLocation').value;
+      const initialPurchase = parseFloat(document.getElementById('initialPurchase').value);
+      const packageDestination = document.getElementById('packageDestination').value;
+
+      if (!isNaN(initialPurchase)) {
+        const deliveryPrice = calculateDeliveryPrice(initialPurchase);
+        alert(`Delivery Price for ${productName}: $${deliveryPrice}`);
+      } else {
+        alert('Please enter a valid Initial Purchase value.');
+      }
+    }
+
+    function calculateDeliveryPrice(initialPurchase) {
+      // Assuming 20% for a 100 unit item, adjust this logic based on your specific pricing rules
+      return 0.2 * initialPurchase;
+    }
+
+    function toggleDeliveryForm() {
+      const deliveryFormSection = document.getElementById('delivery-form-section');
+      const isFormVisible = deliveryFormSection.style.display !== 'none';
+      deliveryFormSection.style.display = isFormVisible ? 'none' : 'block';
+    }
+
+</script>
+
+
+
+
+  <p>Copy right 2023</p>
+
+
+</body></html>
