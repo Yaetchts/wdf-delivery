@@ -1,94 +1,160 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Walk Delivery - Sign Up</title>
-<style>
-  body {
-  font-family: 'Arial', sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: greenyellow;
-}
+<!-- saved from url=(0119)file:///C:/xampp/htdocs/testing/my%20own%20search%20enigine/Search%20engines/Website%20manager/wdf-delivery/index.html# -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hiker &amp; Delivery Service</title>
 
-header {
-  background-color: #333;
-  color: white;
-  text-align: center;
-  padding: 1em;
-}
+  <style>
+    body {
+      font-family: "Arial", sans-serif;
+      margin: 0;
+      padding: 0;
+      position: relative;
+    }
 
-section {
-  margin: 20px;
-}
+    header {
+      background-color: #4285f4; /* Use a color suitable for the theme */
+      color: white;
+      text-align: center;
+      padding: 1em;
+    }
 
-form {
-  display: flex;
-  flex-direction: column;
-  max-width: 300px;
-}
+    section {
+      margin: 20px;
+      text-align: center;
+    }
 
-button {
-  margin-top: 10px;
-  padding: 10px;
-  background-color: #333;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
+    form {
+      display: flex;
+      flex-direction: column;
+      max-width: 300px;
+      margin: auto;
+    }
 
-</style>
+    label {
+      margin-bottom: 8px;
+    }
+
+    input {
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      padding: 10px;
+      background-color: #4285f4; /* Use the same color as the header */
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .signUpBtn {
+      text-decoration: none;
+      color: #4285f4; /* Use the same color as the header */
+    }
+
+    .hiking-image {
+      width: 30%;
+      max-width: 300px;
+      height: auto;
+      border-radius: 10px; 
+      position:absolute;
+      top:200px;
+      left:750px;
+    }
+  </style>
 </head>
 <body>
-
   <!-- Header Section -->
   <header>
-    <h1 style="color:white;">Sign Up for Walk Delivery</h1>
+    <h1>Hiker &amp; Delivery Service</h1>
   </header>
-  <h1 style="color:white;">Heading somewhere with a car ,walking,train,plane etc...Why not deliver a small<br>package while you at it</h1>
 
+  <!-- Hiking Image -->
+  <img src="./index_files/walking.jpg" alt="Hiking Image" class="hiking-image">
 
-<!-- images -->
-
-<img src="airplane.png" alt="" height="200px" width="200px">
-<img src="train.png" alt="" height="200px" width="200px">
-<img src="car.jpg" alt="" height="200px" width="200px">
-<img src="walking.jpg" alt="" height="200" >
-<img src="equal sign.png" alt="" height="200px" width="200px">
-<img src="package.jpg" alt="" height="200px" width="200px" style="position:absolute;top:200px;left:1000px;">
+  <!-- Introduction Section -->
+  <section>
+    <h2>Explore the World and Deliver Packages on Your Journey</h2>
+    <!-- <p>Heading somewhere by car, walking, train, plane, etc.? Why not deliver a small package while you're at it?</p> -->
+  </section>
 
   <!-- Sign Up Form Section -->
-  <section id="signup-form">
+  <section id="signup-form" style="display: none;">
     <form onsubmit="signup(event)">
       <label for="username">Username:</label>
-      <input type="text" id="username" required>
-      
+      <input type="text" id="username" required="">
+
       <label for="email">Email:</label>
-      <input type="email" id="email" required>
-      
+      <input type="email" id="email" required="">
+
       <label for="password">Password:</label>
-      <input type="password" id="password" required>
-      
-      <button type="submit">Sign Up</button>
-      
+      <input type="password" id="password" required="">
+
+      <button class="btnclick" type="submit">Sign Up</button>
     </form>
-    <p>Already have an account? <a href="dashboard.html">Login here</a></p>
+    <p>Already have an account? <a href="file:///C:/xampp/htdocs/testing/my%20own%20search%20enigine/Search%20engines/Website%20manager/wdf-delivery/index.html#" class="signUpBtn" onclick="showSignInForm()">Login here</a></p>
+  </section>
+
+  <!-- Sign In Form Section (Initially Hidden) -->
+  <section id="signin-form" style="display: block;">
+    <form onsubmit="signin(event)">
+      <label for="signin-username">Username:</label>
+      <input type="text" id="signin-username" required="">
+
+      <label for="signin-password">Password:</label>
+      <input type="password" id="signin-password" required="">
+
+      <button class="btnclick" type="submit">Sign In</button>
+    </form>
+    <p>Don't have an account? <a href="file:///C:/xampp/htdocs/testing/my%20own%20search%20enigine/Search%20engines/Website%20manager/wdf-delivery/index.html#" class="signUpBtn" onclick="showSignUpForm()">Sign up here</a></p>
   </section>
 
   <script>
-// Function to handle sign-up (not implemented in this basic example)
-function signup(event) {
-  event.preventDefault();
-  // Fetch form data and send it to the server (backend) for processing
-  // For illustration, let's just log the data for now
-  const username = document.getElementById('username').value;
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
-  console.log('Sign Up Data:', { username, email, password });
-  // You can send this data to the server using an AJAX request (e.g., fetch API)
-}
+    function showSignInForm() {
+      document.getElementById("signup-form").style.display = "none";
+      document.getElementById("signin-form").style.display = "block";
+    }
 
-  </script> 
-</body>
-</html>
+    function showSignUpForm() {
+      document.getElementById("signin-form").style.display = "none";
+      document.getElementById("signup-form").style.display = "block";
+    }
+
+    // Function to handle sign-up (not implemented in this basic example)
+    function signup(event) {
+      event.preventDefault();
+
+      const username = document.getElementById("username").value;
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      const credentials = {
+        username: username,
+        email: email,
+        password: password,
+      };
+
+      // Store data in local storage
+      localStorage.setItem("credentials", JSON.stringify(credentials));
+
+      console.log("Sign Up Data:", { username, email, password });
+    }
+
+    // Function to handle sign-in (not implemented in this basic example)
+    function signin(event) {
+      event.preventDefault();
+
+      const signinUsername = document.getElementById("signin-username").value;
+      const signinPassword = document.getElementById("signin-password").value;
+
+      console.log("Sign In Data:", { username: signinUsername, password: signinPassword });
+    }
+  </script>
+
+
+</body></html>
