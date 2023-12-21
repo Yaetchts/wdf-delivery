@@ -1,280 +1,293 @@
 <!DOCTYPE html>
-<!-- saved from url=(0129)file:///C:/Users/agent%20rice/Videos/Captures/samuel/data%20collection%20center/projects/websites/delivery%20walk/dashboard.html? -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Walk Delivery - Dashboard</title>
-    <style>
-      body {
-        font-family: 'Arial', sans-serif;
-        margin: 0;
-        padding: 0;
-      }
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hiker & Delivery Dashboard</title>
 
-      header {
-        background-color: #333;
-        color: white;
-        text-align: center;
-        padding: 1em;
-      }
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f8f8f8;
+    }
 
-      section {
-        margin: 20px;
-      }
+    .container {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px;
+    }
 
-      form {
-        display: flex;
-        flex-direction: column;
-        max-width: 300px;
-      }
+    .sidebar {
+      width: 30%;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 
-      button {
-        margin-top: 10px;
-        padding: 10px;
-        background-color: white;
-        color: black;
-        border: none;
-        cursor: pointer;
-      }
+    .sidebar h2 {
+      color: #333;
+    }
 
-      #dashboard {
-        display: none;
-      }
+    .filter-label {
+      margin-bottom: 10px;
+      color: #555;
+    }
 
-      #offer-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-      }
+    .filter-select {
+      padding: 10px;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
 
-      #offer-table th, #offer-table td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        text-align: left;
-      }
+    .main-content {
+      width: 65%;
+      background-color: #fff;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 
-      #offer-table th {
-        background-color: #333;
-        color: white;
-      }
+    .search-bar {
+      margin-bottom: 20px;
+    }
 
-      .green-button {
-        background-color: green;
-        color: white;
-        border: none;
-        cursor: pointer;
-      }
+    .search-input {
+      padding: 10px;
+      width: 70%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
 
-      .red-button {
-        background-color: red;
-        color: white;
-        border: none;
-        cursor: pointer;
-      }
-    </style>
+    .search-btn {
+      padding: 10px;
+      background-color: #4285f4;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .job-listings h2 {
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .job {
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    .job-details p {
+      margin: 5px 0;
+      color: #555;
+    }
+
+    .apply-btn {
+      padding: 10px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+  </style>
 </head>
 <body>
-
-
-  <!-- Header Section -->
-  <header>
-    <h1>Welcome to Wdf Delivery</h1>
-    <button onclick="logout()">Logout</button>
-  </header>
-  
   <!-- Dashboard Section -->
-  <section id="dashboard" style="display: none;">
-    <h2>Your Delivery Offers</h2>
-    <table id="offer-table">
-      <thead>
-        <tr>
-          <th>Pickup Address</th>
-          <th>Drop-off Address</th>
-          <th>Package Name</th>
-          <th>Estimated Package Value</th>
-          <th>Weight</th>
-          <th>Cut</th>
-          <th>Your Answer</th>
-        </tr>
-      </thead>
-      <tbody id="offer-table-body"></tbody>
-    </table>
-  </section>
-  
+  <div class="container">
+    <!-- Sidebar Section -->
+    <section class="sidebar">
+      <h2>Options</h2>
 
-  
+      <!-- Filter by Package Size -->
+      <div class="filter-label">Filter by Package Size:</div>
+      <select class="filter-select" id="package-size-filter" onchange="filterByPackageSize()">
+        <option value="all">All Sizes</option>
+        <option value="small">Small</option>
+        <option value="medium">Medium</option>
+        <option value="large">Large</option>
+      </select>
+    </section>
 
-  <!-- Delivery Form Section -->
-  <section id="delivery-form">
-    <h2>I am walking, driving, flying to? ...... today :</h2>
-    <form onsubmit="searchDeliveryOffers(event)">
-      <label for="productName">Enter Area where u heading today</label>
-      <input type="text" id="productName" required="">
-      <button type="submit" style="background-color:grey;">Search Offers</button>
-    </form>
-  </section>
+    <!-- Main Content Section -->
+    <section class="main-content">
+      <!-- Search Bar Section -->
+      <section class="search-bar">
+        <label for="search-input">Where are you heading?</label>
+        <input type="text" id="search-input" class="search-input" placeholder="Enter destination...">
+        <button class="search-btn" onclick="searchJobs()">Search</button>
+      </section>
 
-  <img src="R.gif" alt="" >
-  
-  <img src="flag.png" alt=""  style="position:absolute;top:0px;left:0px;" >
-  <img src="letter.png" alt="" height="120" width="120" style="position:absolute;top:20px;left:1000px;" >
+      <!-- Job Listings Section -->
+      <section class="job-listings">
+        <!-- Job listings will be dynamically populated here -->
+      </section>
+    </section>
+  </div>
 
   <script>
-    const sampleOffers = [
-      { id: 1, pickupAddress: 'Address 1', dropOffAddress: 'Belville', packageName: 'Package 1', estimatedValue: 'R20', weight: '2kg' },
-      { id: 2, pickupAddress: 'Address 3', dropOffAddress: 'Address 4', packageName: 'Package 2', estimatedValue: 'R30', weight: '3kg' },
-    ];
+    // Function to filter jobs based on the selected package size
+    function filterByPackageSize() {
+      const packageSizeFilter = document.getElementById('package-size-filter');
+      const selectedPackageSize = packageSizeFilter.value;
 
-    function displayOffers(offers) {
-      const offerTableBody = document.getElementById('offer-table-body');
-      offerTableBody.innerHTML = '';
+      // Fetch job data (simulated)
+      const allJobs = fetchJobData();
 
-      offers.forEach((offer) => {
-        const row = offerTableBody.insertRow();
-        row.insertCell(0).textContent = offer.pickupAddress;
-        row.insertCell(1).textContent = offer.dropOffAddress;
-        row.insertCell(2).textContent = offer.packageName;
-        row.insertCell(3).textContent = offer.estimatedValue;
-        row.insertCell(4).textContent = offer.weight;
-        row.insertCell(5).textContent = 'R12';  // Placeholder for 'Cut' column
-        const answerCell = row.insertCell(6);
-        const availableButton = document.createElement('button');
-        availableButton.textContent = 'Im available';
-        availableButton.classList.add('green-button');
-        availableButton.addEventListener('click', () => openGoogleMaps(offer.dropOffAddress));
-        const notAvailableButton = document.createElement('button');
-        notAvailableButton.textContent = 'Im not available';
-        notAvailableButton.classList.add('red-button');
-        notAvailableButton.addEventListener('click', () => showConfirmationPopup(offer.id));
-        answerCell.appendChild(availableButton);
-        answerCell.appendChild(notAvailableButton);
-      });
+      // Filter jobs based on the selected package size
+      const filteredJobs = (selectedPackageSize !== 'all')
+        ? allJobs.filter(job => job.packageSize.toLowerCase() === selectedPackageSize)
+        : allJobs;
 
-      // Show the table when there are offers
-      document.getElementById('dashboard').style.display = offers.length > 0 ? 'block' : 'none';
+      // Display the filtered job listings
+      displayJobListings(filteredJobs);
     }
 
-    function searchDeliveryOffers(event) {
-      event.preventDefault();
-      const searchInput = document.getElementById('productName').value.toLowerCase();
+    // Your existing functions (fetchJobData, displayJobListings, applyForJob, searchJobs) remain unchanged
 
-      if (searchInput === 'belville') {
-        const filteredOffers = sampleOffers.filter(offer => offer.dropOffAddress.toLowerCase().includes(searchInput));
-        displayOffers(filteredOffers);
-      } else {
-        // Hide the table if the search keyword is not "belville"
-        document.getElementById('dashboard').style.display = 'none';
-      }
-    }
-
-    function openGoogleMaps(address) {
-      // Open Google Maps with the provided address
-      window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`);
-    }
-
-    function showConfirmationPopup(offerId) {
-      // Show a confirmation popup
-      const confirmation = confirm('Are you sure you are not interested?');
-      if (confirmation) {
-        // Display a message or send a request to delete the offer with offerId
-        console.log(`Offer ${offerId} will be deleted.`);
-      } else {
-        alert('Great, you helped your country today!');
-      }
-    }
-
-    // Function to handle logout (not implemented in this basic example)
-    function logout() {
-      alert('Logout functionality goes here');
-    }
-
-    // Display offers when the page loads
-    window.onload = () => displayOffers([]);
+    // Display all jobs on page load
+    displayJobListings(fetchJobData());
   </script>
+</body>
+</html>
 
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hiker & Delivery Dashboard</title>
 
+  <style>
+    /* Existing styles remain unchanged */
 
+    .search-bar {
+      margin-bottom: 20px;
+    }
 
+    .search-input {
+      padding: 10px;
+      width: 70%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
 
+    .search-btn {
+      padding: 10px;
+      background-color: #4285f4;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Existing HTML code remains unchanged -->
 
-
-
-
-
-
-<header>
-  <h1> Delivery Something</h1>
   
-</header>
 
-
-<button onclick="toggleDeliveryForm()" style="position:absolute;top:500px;left:1000px;">Deliver a Product</button>
-
-<section id="delivery-form-section" style="display: none;position:absolute;top:140px;left:1050px;color:white;background-color: blue;" >
-  <h2>Deliver a Product</h2>
-  <form onsubmit="deliverProduct(event)">
-    <label for="productName">Product Name:</label>
-    <input type="text" id="productName" required="">
-
-    <label for="productWeight">Product Weight:</label>
-    <input type="text" id="productWeight" required="">
-
-    <label for="pickupLocation">Pickup Location:</label>
-    <input type="text" id="pickupLocation" required="">
-
-    <label for="initialPurchase">Initial Purchase:</label>
-    <input type="text" id="initialPurchase" required="">
-
-    <label for="packageDestination">Package Destination:</label>
-    <input type="text" id="packageDestination" required="">
-
-    <button type="submit">Submit</button>
-  </form>
-</section>
-
-<script>
-   function createButton(text, className, onClick) {
-      const button = document.createElement('button');
-      button.textContent = text;
-      button.classList.add(className);
-      button.addEventListener('click', onClick);
-      return button;
+  <script>
+    // Function to simulate fetching job data (replace with actual data fetching logic)
+    function fetchJobData() {
+      // Simulate fetching job data from the server
+      return [
+        {
+          destination: "Mountain Base Camp",
+          packageSize: "Medium",
+          distance: "10 miles",
+          reward: "$20",
+        },
+        {
+          destination: "Forest Grove",
+          packageSize: "Small",
+          distance: "5 miles",
+          reward: "$15",
+        },
+        {
+          destination: "Belville",
+          packageSize: "Large",
+          distance: "15 miles",
+          reward: "$25",
+        },
+        // Add more job data as needed
+      ];
     }
 
-    function deliverProduct(event) {
-      event.preventDefault();
-      const productName = document.getElementById('productName').value;
-      const productWeight = document.getElementById('productWeight').value;
-      const pickupLocation = document.getElementById('pickupLocation').value;
-      const initialPurchase = parseFloat(document.getElementById('initialPurchase').value);
-      const packageDestination = document.getElementById('packageDestination').value;
+    // Function to display job listings on the webpage
+    function displayJobListings(jobs) {
+      const jobListingsSection = document.querySelector('.job-listings');
 
-      if (!isNaN(initialPurchase)) {
-        const deliveryPrice = calculateDeliveryPrice(initialPurchase);
-        alert(`Delivery Price for ${productName}: $${deliveryPrice}`);
-      } else {
-        alert('Please enter a valid Initial Purchase value.');
-      }
+      // Clear existing job listings
+      jobListingsSection.innerHTML = "<h2>Available Deliveries</h2>";
+
+      // Display each job listing
+      jobs.forEach(job => {
+        const jobElement = document.createElement('div');
+        jobElement.classList.add('job');
+
+        const jobDetailsElement = document.createElement('div');
+        jobDetailsElement.classList.add('job-details');
+
+        // Display job details
+        const jobDetails = [
+          { label: "Destination", value: job.destination },
+          { label: "Package Size", value: job.packageSize },
+          { label: "Distance", value: job.distance },
+          { label: "Reward", value: job.reward },
+        ];
+
+        jobDetails.forEach(detail => {
+          const detailParagraph = document.createElement('p');
+          detailParagraph.innerHTML = `<strong>${detail.label}:</strong> ${detail.value}`;
+          jobDetailsElement.appendChild(detailParagraph);
+        });
+
+        // Create an "Apply" button
+        const applyButton = document.createElement('button');
+        applyButton.classList.add('apply-btn');
+        applyButton.textContent = 'Apply';
+        applyButton.onclick = () => applyForJob(job.destination);
+
+        // Append job details and apply button to the job element
+        jobElement.appendChild(jobDetailsElement);
+        jobElement.appendChild(applyButton);
+
+        // Append the job element to the job listings section
+        jobListingsSection.appendChild(jobElement);
+      });
     }
 
-    function calculateDeliveryPrice(initialPurchase) {
-      // Assuming 20% for a 100 unit item, adjust this logic based on your specific pricing rules
-      return 0.2 * initialPurchase;
+    // Function to simulate applying for a job (replace with actual application logic)
+    function applyForJob(destination) {
+      alert(`Applied for the job to ${destination}. Implement your application logic here.`);
     }
 
-    function toggleDeliveryForm() {
-      const deliveryFormSection = document.getElementById('delivery-form-section');
-      const isFormVisible = deliveryFormSection.style.display !== 'none';
-      deliveryFormSection.style.display = isFormVisible ? 'none' : 'block';
+    // Function to filter jobs based on the search query
+    function searchJobs() {
+      const searchInput = document.getElementById('search-input');
+      const searchQuery = searchInput.value.toLowerCase();
+
+      // Fetch job data (simulated)
+      const allJobs = fetchJobData();
+
+      // Filter jobs based on the search query
+      const filteredJobs = allJobs.filter(job => job.destination.toLowerCase().includes(searchQuery));
+
+      // Display the filtered job listings
+      displayJobListings(filteredJobs);
     }
 
-</script>
-
-
-
-
-  <p>Copy right 2023</p>
-
-
-</body></html>
+    // Display all jobs on page load
+    displayJobListings(fetchJobData());
+  </script>
+</body>
+</html>
